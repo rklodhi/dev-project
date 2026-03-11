@@ -1,16 +1,26 @@
 package com.example;
 
-public class App {
-    public static void main(String[] args) {
-        System.out.println("Hello from Jenkins Maven Build!");
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import com.sun.net.httpserver.HttpServer;
 
-        while (true) {
-            try {
-                Thread.sleep(10000); // sleep for 10 seconds
-                System.out.println("Application is running on version V2...");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+public class App {
+
+    public static void main(String[] args) throws IOException {
+
+        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+
+        server.createContext("/", exchange -> {
+            String response = "Hello from Kubernetes App updated version V1!";
+            exchange.sendResponseHeaders(200, response.length());
+            OutputStream os = exchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        });
+
+        server.start();
+
+        System.out.println("Server started on port 8080");
     }
 }
