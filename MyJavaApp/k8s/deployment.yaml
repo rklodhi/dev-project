@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: java-app
-        image: rakesh007lodhi079/java-app:1
+        image: rakesh007lodhi079/java-app:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
