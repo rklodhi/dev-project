@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-app-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: java-app
+      version: canary
+
+  template:
+    metadata:
+      labels:
+        app: java-app
+        version: canary
+    spec:
+      containers:
+      - name: java-app
+        image: rakesh007lodhi079/java-app:76
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+
